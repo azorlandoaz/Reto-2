@@ -1,0 +1,50 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio</title>
+
+    <link rel="stylesheet" href="../css/Login/style.css">
+</head>
+<body ng-app="parking">
+
+    <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+
+    <div id="formWrapper" ng-controller="loginCtrl">
+        <div id="form">
+            <div class="logo">
+                <h1 id="title" class="hidden"><span id="logo">Iniciar sesion <span>UAO</span></span></h1>
+                <h2 id="title2" class="hidden"><span id="logo2">Jessica Riaño - Cristian Morales</span></h2>
+            </div>
+            <form ng-submit="clickLogin()">
+                <div class="form-item">
+                    <p class="formLabel">Usuario</p>
+                    <input type="text" name="email" id="email" class="form-style" autocomplete="off" ng-model="login.username" />
+                </div>
+                <div class="form-item">
+                    <p class="formLabel">Contraseña</p>
+                    <input type="password" name="password" id="password" class="form-style" ng-model="login.UserPassword" />
+                    <p>
+                        <a href="http://localhost:8082/Views/Registro.html"><small>Registrarse</small></a>
+                    </p>
+                </div>
+                <div class="form-item">
+
+                    <input type="submit" class="login pull-right" value="Iniciar sesion">
+                    {{login.error}}
+                    <div class="clear-fix"></div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+    <script src="../Scripts/Login/LoginController.js"></script>
+    <script src="../Scripts/md5.js"></script>
+    <script src="../Scripts/Config.js"></script>
+
+</body>
+</html>

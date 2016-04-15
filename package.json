@@ -1,0 +1,17 @@
+{
+	"dependencies" :
+	{
+		"express" : "4.13.4",
+		"mongoose" : "4.0.3"
+	},
+	"devDependencies": {
+		"gulp": "3.8.11",
+		"gulp-mocha": "2.0.1",
+		"mocha": "2.2.4",
+		"body-parser":"1.15.0"
+	},
+	"scripts": {
+		"test": "gulp test",
+		"watch": "gulp watch"
+	}
+}

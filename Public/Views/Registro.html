@@ -1,0 +1,55 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar usuario</title>
+
+    <link rel="stylesheet" href="../css/Login/style.css">
+</head>
+<body ng-app="parking">
+
+   <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+
+    <div id="formWrapper" ng-controller="registerCtrl">
+        <div id="form">
+            <div class="logo">
+                <h1 id="title" class="hidden"><span id="logo">Registro <span>UAO</span></span></h1>
+            </div>
+            <form ng-submit="clickRegister()">
+                   <div class="form-item">
+                    <p class="formLabel">Nickname</p>
+                    <input type="text" name="nickname" id="nickname" class="form-style" autocomplete="off" ng-model="register.nickname" />
+                </div>
+
+                <div class="form-item">
+                    <p class="formLabel">Codigo</p>
+                    <input type="text" name="codigo" id="codigo" class="form-style" autocomplete="off" ng-model="register.codigo" />
+                </div>
+
+                   <div class="form-item">
+                    <p class="formLabel">Usuario</p>
+                    <input type="text" name="username" id="username" class="form-style" autocomplete="off" ng-model="register.username" />
+                </div>
+                <div class="form-item">
+                    <p class="formLabel">Contraseña</p>
+                    <input type="password" name="password" id="password" class="form-style" ng-model="register.UserPassword" />
+                </div>
+                <div class="form-item">
+
+                    <input type="submit" class="login pull-right" value="Registrar">
+                    {{register.error}}
+                    <div class="clear-fix"></div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+    <script src="../Scripts/Register/Registro.js"></script>
+    <script src="../Scripts/md5.js"></script>
+
+</body>
+</html>
