@@ -1,87 +1,64 @@
 ﻿<!DOCTYPE html>
-<html ng-app="parking" >
+<html ng-app="reto" >
 <head>
     <meta charset="UTF-8">
 
-    <title>Reporte</title>
+    <title>Prestamo</title>
     <meta name="viewport" content="width=device-width">
-
-    <link rel="stylesheet" href="../css/Report/normalizeDate.css">
     <link rel='stylesheet prefetch' href='../css/Report/pikaday.css'>
     <link rel="stylesheet" href="../css/Report/jquery.mobile-1.0.min.css" />
 
     <link rel="stylesheet" href="../css/Report/normalizeBanner.css">
     <link rel="stylesheet" href="../css/Report/StyleBanner.css">
-    <link rel="stylesheet" href="../css/Report/StyleDate.css">
-    <link rel="stylesheet" href="../css/Report/resetSearch.css">
-    <link rel="stylesheet" href="../css/Report/styleSearch.css">
     <link rel="stylesheet" href="../css/Report/normalize2.css">
     <link rel="stylesheet" href="../css/Report/style2.css">
 
     <script src="../Scripts/Report/angular.min.js"></script>
-    <script src="../Scripts/prefixfreeDate.min.js"></script>
     <script src="../Scripts/prefixfreeBanner.min.js"></script>
 </head>
 
-<body  ng-controller="ReportCtrl">
+<body  ng-controller="ElementoCtrl">
 
     <header class="header-banner-top">
         <div class="main-navigation" >
             <nav class="horizontal-nav primary-wrapper" role='navigation'>
                 <ul>
                     <li><a href="#">Inicio</a></li>
-                    <li class="active-link"><a href="#">Reporte</a></li>
+                    <li class="active-link"><a href="#">Prestamos</a></li>
                     <li><a ng-click="clickSalir()">Salir</a></li>
                 </ul>
             </nav>
             <label for="mobile-menu-toggle" class="mobile-menu-label hidden"></label>
         </div>
-
         <div class="banner">
-
             <div class="banner-image"></div>
-
             <div class="primary-wrapper">
-                <h1 id="title" class="site-title"><span id="logo"> {{sesion.nick}} <br><br><br><span>UAO</span></span></h1>
+                <h1 id="title" class="site-title"><span id="logo"> {{sesion.nick}} <br><br><br><span>Prestamos</span></span></h1>
             </div>
         </div>
-
     </header>
 
     <div class="wrapper">
         <form>
 
-       <div class="dates-wrapper group">
-                  <div class="label">
-                        <label for="">Usuario:</label>
-                        <input name="experience-end" id="datepicker-end" class="input-text" ng-model="report.Usuario">
-                  </div>
-                <div class='search' ng-click="clickReport()"></div>
-            </div>
-            {{login.error}}
         </form>
 
         <div class="table">
-
             <div class="row header blue">
-                <div class="cell">Seleccionar</div>
-                <div class="cell">Id Usuario</div>
-                <div class="cell">Tipo Log</div>
-                <div class="cell">Fecha</div>
-                <div class="cell">Id</div>
+                <div class="cell">Devolver</div>
+                <div class="cell">Elemento</div>
+                <div class="cell">Estado</div>
+                <div class="cell">Fecha de inicio</div>
+                <div class="cell">Fecha de fin</div>
             </div>
-
-            <div class="row" ng-repeat="repor in report">
-                <div class="cell"><input type="checkbox" ng-model="checked" ng-change="check(repor._id,checked)"/> </div>
-                <div class="cell">{{ repor.IdUsuario }}</div>
-                <div class="cell">{{ repor.TipoLog }}</div>
-                <div class="cell">{{ repor.Fecha }}</div>
-                <div class="cell">{{ repor._id }}</div>
+            <div class="row" ng-repeat="elem in elemento">
+                <div class="cell"><input type="checkbox" ng-model="checked" ng-change="check(elem._id,checked)"/> </div>
+                <div class="cell">{{ elem.nombre }}</div>
+                <div class="cell">{{ elem.estado }}</div>
+                <div class="cell">{{ elem.FechaInicio }}</div>
+                <div class="cell">{{ elem.FechaFin }}</div>
             </div>
         </div>
-
-        <div class='search' ng-click="clickSave()"></div>
-
     </div>
 
     <script src="../Scripts/Report/Report.js"></script>
@@ -91,8 +68,6 @@
     <script src='../Scripts/Report/pikaday.jquery.js'></script>
     <script src='../Scripts/Report/jquery.mobile.min.js'></script>
     <script src="../Scripts/Report/modernizr.js" type="text/javascript"></script>
-    <script src="../Scripts/Report/indexDate.js"></script>
-    <script src="../Scripts/Report/indexSearch.js"></script>
-
+  
 </body>
 </html>

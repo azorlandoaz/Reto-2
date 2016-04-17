@@ -10,10 +10,12 @@ module.exports.createObjectWithName = function(coleccion, v1, v2, v3, v4, v5) {
 		obj = new Registro({IdUsuario:v1,TipoLog:v2, Fecha:v3});
 	}
 	else if ( coleccion == 'Prestamo') {
-		obj = new Prestamo({IdUsuario:v1,TipoLog:v2, Fecha:v3});
+		obj = new Prestamo({idUsuario:v1,fechaInicio:v2, fechaFin:v3});
 	}
 	else if ( coleccion == 'Item') {
 		obj = new Item({IdUsuario:v1,TipoLog:v2, Fecha:v3});
+	}else if (coleccion =='Elemento') {
+		obj = new Elemento({nombre:v1, estado:v2});
 	}	
 	return obj;
 }
@@ -33,6 +35,8 @@ module.exports.findCollectionByName = function(name)
 	}
 	else if ( name === 'Item') {
 		objeto = Item;
+	}else if (name ==='Elemento') {
+		objeto = Elemento;
 	}
 	return objeto;
 }

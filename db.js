@@ -15,6 +15,9 @@ Prestamo = db.model('Prestamo', schema_Prestamo);
 var schema_Item = require('./Model/Item.js');
 Item = db.model('Item', schema_Item);
 
+var schema_Elemento = require('./Model/Elemento.js');
+Elemento = db.model('Elemento', schema_Elemento);
+
 console.log((db));
 module.exports=db;
 module.exports=mongoose;

@@ -1,41 +1,18 @@
-﻿//if (!sessionStorage.getItem('token')) {
+//if (!sessionStorage.getItem('token')) {
 //    document.location = "/Views/index.html";
 //}
 
-var parking = angular.module('parking', []);
+var reto = angular.module('reto', []);
 
-parking.controller('ReportCtrl', function ($scope, $http) {
+reto.controller('ElementoCtrl', function ($scope, $http) {
 
-    $scope.report = {};
+    $scope.elemento = {};
     $scope.sesion = {};
 
     $scope.select = {
         id:["id"]
     };
     onLoadReport();
-
-    $scope.clickReport = function () {
-        var report = {}
-        angular.extend(report, $scope.report);
-        if (report.Usuario != null) {
-            var url = 'http://localhost:8081/read/Registro/'+report.Usuario;
-        }else
-        {
-            var url = 'http://localhost:8081/read/Registro';
-        }
-
-        var get = $http.get(url);
-            get.then(success, fail);
-
-            function success(resp) {
-                $scope.report = resp.data.value;
-            }
-
-            function fail(resp) {
-                $scope.report.error = "No se encontro registro.";
-            }
-        
-    };
 
     $scope.check = function(value, checked) {
     var idx = arrayObjectIndexOf($scope.select,value);
@@ -62,41 +39,52 @@ parking.controller('ReportCtrl', function ($scope, $http) {
     
 
     function onLoadReport() {
-
         var username = sessionStorage.username;
-        var url = 'http://localhost:8081/readUsuario/'+username;
-        var getUser = $http.get(url);
-        getUser.then(success, fail);
-            
-            function success(resp) {  
-                $scope.sesion.nick = resp.data.value[0].nick;
-                console.log($scope.report.sesion);
+        var elemento = {}
+        angular.extend(elemento, $scope.elemento);
+
+       
+        if (username != null) {
+            var url = 'http://localhost:8081/readElement/Elemento';
+        }else
+        {
+            document.location = '/Views/Login.html';
+        }
+
+        var get = $http.get(url);
+            get.then(success, fail);
+
+            function success(resp) {
+                $scope.elemento = resp.data.value;
+                //$scope.elemento = JSON.parse(resp.data)
+                console.log( resp.data.value);
             }
 
             function fail(resp) {
-                $scope.login.error = "Error al cargar la sesion de Logeo";
+                $scope.elemento.error = "No se encontro registro.";
             }
+        
     }
 
-    function operationSearchD(report) {
+    function operationSearchD(elemento) {
 
         var url = '/read/Registro/';
         var get = $http.get(url);
         get.then(success, fail);
 
         function success(resp) {
-            $scope.report = JSON.parse(resp.data);
+            $scope.elemento = JSON.parse(resp.data);
         }
 
         function fail(resp) {
             console.log(resp);
-            $scope.report.error = "No se encontro registro.";
+            $scope.elemento.error = "No se encontro registro.";
         }
     }
 
     $scope.clickSalir = function () {
-       // var deleteToken = $http.delete('/api/operation/' + sessionStorage.getItem('token'));
-       // deleteToken.then(success, fail);
+            //var deleteToken = $http.delete('/api/operation/' + sessionStorage.getItem('token'));
+            //deleteToken.then(success, fail);
             //sessionStorage.removeItem('token');
             //alert("OK" + resp);
             var username = sessionStorage.username;
@@ -117,6 +105,8 @@ parking.controller('ReportCtrl', function ($scope, $http) {
             alert("No se pudo cerrar sesion. " + resp.data);
         }
     }
+
+   
 });
 
 
