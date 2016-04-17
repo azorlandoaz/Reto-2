@@ -90,7 +90,7 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
             var username = sessionStorage.username;
             var d = new Date(); 
             var datenow = d.getMonth()+'-'+d.getDay()+'-'+d.getFullYear()+'-'+ d.getHours()+':' + d.getMinutes(); 
-            var registerUrl = '/createRegistro/Registro/'+ username+'/LogOut' + '/'+ datenow;
+            var registerUrl = 'http://localhost:8081/createRegistro/Registro/'+ username+'/LogOut' + '/'+ datenow;
             var getRegister = $http.get(registerUrl);
             getRegister.then(sucessRegister, failRegister);
         
