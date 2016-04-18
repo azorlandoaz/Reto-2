@@ -15,6 +15,11 @@
 
     <script src="../Scripts/Report/angular.min.js"></script>
     <script src="../Scripts/prefixfreeBanner.min.js"></script>
+
+    <!-- Boton-->
+        <link rel="stylesheet" href="../css/normalizeButton.css">
+    <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Montserrat'>
+    <link rel="stylesheet" href="../css/styleButton.css">
 </head>
 
 <body  ng-controller="ElementoCtrl">
@@ -24,8 +29,8 @@
             <nav class="horizontal-nav primary-wrapper" role='navigation'>
                 <ul>
                     <li><a href="#">Inicio</a></li>
-                    <li class="active-link"><a href="#">Prestamos</a></li>
-                    <li><a ng-click="clickSolicitarPrestamo()">Solicitar prestamo</a></li>
+                    <li ><a ng-click="clickConsultarPrestamo()">Prestamos</a></li>
+                    <li class="active-link"><a href="#">Solicitar prestamo</a></li>
                     <li><a ng-click="clickSalir()">Salir</a></li>
                 </ul>
             </nav>
@@ -34,7 +39,7 @@
         <div class="banner">
             <div class="banner-image"></div>
             <div class="primary-wrapper">
-                <h1 id="title" class="site-title"><span id="logo"> {{sesion.nick}} <br><br><br><span>Prestamos</span></span></h1>
+                <h1 id="title" class="site-title"><span id="logo"><br><br><br><span>Prestamos</span></span></h1>
             </div>
         </div>
     </header>
@@ -46,29 +51,79 @@
 
         <div class="table">
             <div class="row header blue">
-                <div class="cell">Devolver</div>
+                <div class="cell">Seleccionar</div>
                 <div class="cell">Elemento</div>
                 <div class="cell">Estado</div>
-                <div class="cell">Fecha de inicio</div>
-                <div class="cell">Fecha de fin</div>
+          
             </div>
             <div class="row" ng-repeat="elem in elemento">
                 <div class="cell"><input type="checkbox" ng-model="checked" ng-change="check(elem._id,checked)"/> </div>
                 <div class="cell">{{ elem.nombre }}</div>
                 <div class="cell">{{ elem.estado }}</div>
-                <div class="cell">{{ elem.FechaInicio }}</div>
-                <div class="cell">{{ elem.FechaFin }}</div>
+         
             </div>
+
         </div>
+<!--Button -->
+   <div class="component" ng-click="clickGuardar()" ng-style="disableTagButton">
+  <button class="colins-submit">
+    <svg width="196" height="70" 
+         viewPort="0 0 196 70" version="1.1"
+         xmlns="http://www.w3.org/2000/svg">
+      
+      <rect class="btn-shape btn-bg"
+            x="3" y="3" 
+            width="190" height="64"
+            rx="32" ry="32" 
+            fill="#ffffff"
+            fill-opacity="1"
+            stroke="#ccc" stroke-width="4"
+            />  
+      <rect class="btn-shape btn-color"
+            x="3" y="3" 
+            width="190" height="64"
+            rx="32" ry="32" 
+            fill="#ffffff"
+            fill-opacity="0"
+            stroke="rgb(16,50,73)" stroke-width="4"
+            />
+      <text class="checkNode" x="96" y="40" 
+            font-family="Montserrat" 
+            font-size="22"
+            fill-opacity="1"
+            text-anchor="middle"
+            fill="rgb(255,255,255)" >
+        ✔
+      </text>
+      <text class="textNode" x="96" y="40" 
+            transform="scale(1)"
+            font-family="Montserrat" 
+            font-size="16"
+            fill-opacity="1"
+            text-anchor="middle"
+            fill="rgb(16,50,73)" >
+        Solicitar
+      </text>
+    </svg>
+  </button>
+
+</div>
+
+<!--Button -->
+        
     </div>
 
-    <script src="../Scripts/Report/Report.js"></script>
+    <script src="../Scripts/SolicitudPrestamo/SolicitudPrestamo.js"></script>
     <script src='../Scripts/Report/jquery.min.js'></script>
     <script src='../Scripts/Report/moment.min.js'></script>
     <script src='../Scripts/Report/pikaday.min.js'></script>
     <script src='../Scripts/Report/pikaday.jquery.js'></script>
     <script src='../Scripts/Report/jquery.mobile.min.js'></script>
     <script src="../Scripts/Report/modernizr.js" type="text/javascript"></script>
-  
+
+    <!-- Button-->
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.1/TweenMax.min.js'></script>
+    <script src="../Scripts/indexSaveButton.js"></script>
 </body>
 </html>

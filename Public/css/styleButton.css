@@ -1,0 +1,60 @@
+body {
+  text-align: center;
+}
+
+.center-component {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+button.colins-submit {
+  background: transparent;
+  border: none;
+}
+button.colins-submit.is-active {
+  cursor: default;
+}
+button.colins-submit:focus {
+  outline: none;
+}
+button.colins-submit::-moz-focus-inner {
+  border: 0;
+}
+button.colins-submit svg text {
+  font-family: 'Montserrat', sans-serif;
+}
+button.colins-submit svg text.textNode {
+  fill: #2980b9;
+}
+button.colins-submit svg text.checkNode {
+  fill-opacity: 0;
+}
+button.colins-submit svg rect.btn-shape.btn-bg {
+  stroke: #2980b9;
+  fill: white;
+}
+button.colins-submit svg rect.btn-shape.btn-color {
+  stroke: #2980b9;
+  fill: white;
+  stroke-dasharray: 453;
+  stroke-dashoffset: 0;
+}
+
+p {
+  font-family: Montserrat, sans-serif;
+  color: #2980b9;
+  font-size: 1rem;
+  max-width: 330px;
+}
+p a {
+  color: #2980b9;
+}
+p a:hover, p a:active {
+  color: #2980b9;
+}
+p a:visited {
+  color: #2980b9;
+}

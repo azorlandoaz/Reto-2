@@ -11,6 +11,7 @@ var Usuario_Service = require('./service_usuario.js');
 var Registro_Service = require('./service_registro.js');
 var Elemento_Service = require('./service_elemento.js');
 var Prestamo_Servicie = require('./service_prestamo.js');
+var Item_Servicie = require('./service_item.js');
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -29,6 +30,7 @@ app.get('/createRegistro/:collection/:v1/:v2/:v3',Registro_Service.createRegistr
 
 app.get('/readUsuario/:param/:value',Usuario_Service.readUsuario);
 app.get('/readUsuario/:param',Usuario_Service.readUsuarioByName);
+
 app.get('/createUsuario/:v1/:v2/:v3/:v4/:v5',Usuario_Service.createUsuario);
 
 app.get('/create/:collection/:v1/:v2',Elemento_Service.create);
@@ -37,6 +39,9 @@ app.get('/readElement/:collection',Elemento_Service.read);
 app.get('/prestamoCreate/:collection/:v1/:v2/:v3', Prestamo_Servicie.create);
 app.get('/prestamoRead/:collection', Prestamo_Servicie.read);
 app.get('/prestamoReadX/:collection/:param', Prestamo_Servicie.readX);
+
+app.get('/CreateItem/:collection/:v1/:v2', Item_Servicie.create);
+app.get('/ReadItem/:collection', Item_Servicie.read);
 
 http.createServer(app).listen(port);
 console.log("Servidor activo por el puerto " + port);

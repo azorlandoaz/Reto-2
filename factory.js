@@ -13,7 +13,7 @@ module.exports.createObjectWithName = function(coleccion, v1, v2, v3, v4, v5) {
 		obj = new Prestamo({idUsuario:v1,fechaInicio:v2, fechaFin:v3});
 	}
 	else if ( coleccion == 'Item') {
-		obj = new Item({IdUsuario:v1,TipoLog:v2, Fecha:v3});
+		obj = new Item({idPrestamo:v1, idElemento:v3});
 	}else if (coleccion =='Elemento') {
 		obj = new Elemento({nombre:v1, estado:v2});
 	}	
