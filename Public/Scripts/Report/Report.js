@@ -93,7 +93,7 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
                      function successElement(resp_element) {
                         $scope.prestamo.elemento.push(resp_element.data.value[0]);
                         $scope.elemento = $scope.prestamo.elemento;
-                        console.log($scope.prestamo.elemento);
+                        console.log(resp_element.data.value[0]);
                     } 
                     function failElement(resp_element) {
                         $scope.prestamo.error = "No se encontro elemento.";

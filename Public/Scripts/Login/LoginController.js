@@ -29,8 +29,6 @@ parking.controller('loginCtrl', function ($scope, $http) {
 
         var login = {}
         angular.extend(login, $scope.login);
-        sessionStorage.username = login.username;
-
         if (login.username != null && login.UserPassword != null) 
         {
             var url = 'http://localhost:8081/readUsuario/'+login.username+'/'+login.UserPassword;
@@ -44,6 +42,8 @@ parking.controller('loginCtrl', function ($scope, $http) {
             var userExist = resp.data.value.length;
             var datenow = d.getMonth()+'-'+d.getDay()+'-'+d.getFullYear()+'-'+ d.getHours()+':' + d.getMinutes(); 
             sessionStorage.userID = resp.data.value[0]._id;
+            sessionStorage.username = login.username;
+            sessionStorage.perfil = resp.data.value[0].perfil;
             if(userExist == 0){
                 var registerUrl = 'http://localhost:8081/createRegistro/Registro/'+ login.username+'/LogError' + '/'+ datenow;
             }else{                
@@ -61,7 +61,11 @@ parking.controller('loginCtrl', function ($scope, $http) {
 
     function sucessRegister(resp)
     {
+        if(sessionStorage.perfil == "almacenista"){
+            document.location = '/Views/Almacenista.html';
+        }else{
         document.location = '/Views/Report.html';
+        }
     }
 
     function failRegister(resp)
