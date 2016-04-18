@@ -6,10 +6,10 @@ var reto = angular.module('reto', []);
 
 reto.controller('ElementoCtrl', function ($scope, $http) {
     $scope.elemento = {
-        id:["id"]
+        id:[]
     };
     $scope.prestamo = {
-        elemento:["elemento"],
+        elemento:[],
         prestamo:["prestamo"]
     };
 
@@ -66,8 +66,8 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
                      var getItem = $http.get(urlItem);
                      getItem.then(successItem, failItem);
                 } 
-                $scope.elemento = $scope.prestamo.prestamo.concat($scope.prestamo.elemento);
-                console.log($scope.elemento);
+                //$scope.elemento = $scope.prestamo.prestamo.concat($scope.prestamo.elemento);
+                console.log($scope.prestamo.elemento);
             }
                 function successItem(resp) {
                     for (var i = 0; i < resp.data.value.length; i++) {
@@ -78,6 +78,8 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
 
                      function successElement(resp_element) {
                         $scope.prestamo.elemento.push(resp_element.data.value[0]);
+                        $scope.elemento = $scope.prestamo.elemento;
+                        console.log($scope.prestamo.elemento);
                     } 
                     function failElement(resp_element) {
                         $scope.prestamo.error = "No se encontro elemento.";

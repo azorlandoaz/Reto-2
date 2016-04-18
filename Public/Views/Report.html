@@ -52,12 +52,12 @@
                 <div class="cell">Fecha de inicio</div>
                 <div class="cell">Fecha de fin</div>
             </div>
-            <div class="row" ng-repeat="pres in prestamo">
-                <div class="cell"><input type="checkbox" ng-model="checked" ng-change="check(pres._id,checked)"/> </div>
-                <div class="cell">{{ pres.prestamo }}</div>
-                <div class="cell">{{ pres.elemento.estado }}</div>
-                <div class="cell">{{ pres.fechaInicio }}</div>
-                <div class="cell">{{ pres.fechaFin }}</div>
+            <div class="row" ng-repeat="elem in elemento">
+                <div class="cell"><input type="checkbox" ng-model="checked" ng-change="check(elem._id,checked)"/> </div>
+                <div class="cell">{{ elem.nombre }}</div>
+                <div class="cell">{{ elem.estado }}</div>
+                <div class="cell">{{ elem.fechaInicio }}</div>
+                <div class="cell">{{ elem.fechaFin }}</div>
             </div>
         </div>
     </div>
