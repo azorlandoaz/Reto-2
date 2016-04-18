@@ -35,13 +35,15 @@ app.get('/createUsuario/:v1/:v2/:v3/:v4/:v5',Usuario_Service.createUsuario);
 
 app.get('/create/:collection/:v1/:v2',Elemento_Service.create);
 app.get('/readElement/:collection',Elemento_Service.read);
+app.get('/ElementReadX/:collection/:param/:value', Elemento_Service.readX);
 
 app.get('/prestamoCreate/:collection/:v1/:v2/:v3', Prestamo_Servicie.create);
 app.get('/prestamoRead/:collection', Prestamo_Servicie.read);
-app.get('/prestamoReadX/:collection/:param', Prestamo_Servicie.readX);
+app.get('/prestamoReadX/:collection/:param/:value', Prestamo_Servicie.readX);
 
 app.get('/CreateItem/:collection/:v1/:v2', Item_Servicie.create);
 app.get('/ReadItem/:collection', Item_Servicie.read);
+app.get('/itemReadX/:collection/:param/:value', Item_Servicie.readX);
 
 http.createServer(app).listen(port);
 console.log("Servidor activo por el puerto " + port);

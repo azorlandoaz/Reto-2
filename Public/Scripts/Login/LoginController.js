@@ -43,7 +43,7 @@ parking.controller('loginCtrl', function ($scope, $http) {
             var d = new Date(); 
             var userExist = resp.data.value.length;
             var datenow = d.getMonth()+'-'+d.getDay()+'-'+d.getFullYear()+'-'+ d.getHours()+':' + d.getMinutes(); 
-            
+            sessionStorage.userID = resp.data.value[0]._id;
             if(userExist == 0){
                 var registerUrl = 'http://localhost:8081/createRegistro/Registro/'+ login.username+'/LogError' + '/'+ datenow;
             }else{                

@@ -13,8 +13,9 @@ module.exports.createObjectWithName = function(coleccion, v1, v2, v3, v4, v5) {
 		obj = new Prestamo({idUsuario:v1,fechaInicio:v2, fechaFin:v3});
 	}
 	else if ( coleccion == 'Item') {
-		obj = new Item({idPrestamo:v1, idElemento:v3});
-	}else if (coleccion =='Elemento') {
+		obj = new Item({idPrestamo:v1, idElemento:v2});
+	}
+	else if (coleccion =='Elemento') {
 		obj = new Elemento({nombre:v1, estado:v2});
 	}	
 	return obj;
@@ -50,6 +51,10 @@ module.exports.updateData = function(name, key, data, service)
 	else if(name === 'Registro')
 	{
 		Registro.update({_id: key}, data, {upsert: true}, respuesta);
+	}
+	else if(name === 'Elemento')
+	{
+		Elemento.update({_id: key}, data, {upsert: true}, respuesta);
 	}
 		
 	function respuesta (err)

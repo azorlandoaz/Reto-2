@@ -57,7 +57,7 @@
           
             </div>
             <div class="row" ng-repeat="elem in elemento">
-                <div class="cell"><input type="checkbox" ng-model="checked" ng-change="check(elem._id,checked)"/> </div>
+                <div class="cell"><input type="checkbox" ng-model="checked" ng-change="check(elem._id,elem.nombre,checked)"/> </div>
                 <div class="cell">{{ elem.nombre }}</div>
                 <div class="cell">{{ elem.estado }}</div>
          

@@ -5,8 +5,14 @@
 var reto = angular.module('reto', []);
 
 reto.controller('ElementoCtrl', function ($scope, $http) {
+    $scope.elemento = {
+        id:["id"]
+    };
+    $scope.prestamo = {
+        elemento:["elemento"],
+        prestamo:["prestamo"]
+    };
 
-    $scope.elemento = {};
     $scope.sesion = {};
 
     $scope.select = {
@@ -37,29 +43,54 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
     
 
     function onLoadReport() {
-        var username = sessionStorage.username;
+        var userID = sessionStorage.userID;
+        var prestamo = {}
+        angular.extend(prestamo, $scope.prestamo);
         var elemento = {}
         angular.extend(elemento, $scope.elemento);
 
        
-        if (username != null) {
-            var url = 'http://localhost:8081/readElement/Elemento';
-        }else
-        {
+        if (userID != null) {
+            var url = 'http://localhost:8081/prestamoReadX/Prestamo/idUsuario/'+userID;
+        }else   {
             document.location = '/Views/Login.html';
         }
 
         var get = $http.get(url);
             get.then(success, fail);
 
-            function success(resp) {
-                $scope.elemento = resp.data.value;
-                //$scope.elemento = JSON.parse(resp.data)
-                //console.log( resp.data.value);
+            function success(resp_prestamo) {
+                $scope.prestamo.prestamo = resp_prestamo.data.value;
+                for (var i = 0; i < resp_prestamo.data.value.length; i++) {
+                     var urlItem = 'http://localhost:8081/itemReadX/Item/idPrestamo/'+resp_prestamo.data.value[i]._id;
+                     var getItem = $http.get(urlItem);
+                     getItem.then(successItem, failItem);
+                } 
+                $scope.elemento = $scope.prestamo.prestamo.concat($scope.prestamo.elemento);
+                console.log($scope.elemento);
             }
+                function successItem(resp) {
+                    for (var i = 0; i < resp.data.value.length; i++) {
+                     var urlElement = 'http://localhost:8081/ElementReadX/Elemento/_id/'+resp.data.value[i].idElemento;
+                     var getElement = $http.get(urlElement);
+                     getElement.then(successElement, failElement);
+                    }
 
-            function fail(resp) {
-                $scope.elemento.error = "No se encontro registro.";
+                     function successElement(resp_element) {
+                        $scope.prestamo.elemento.push(resp_element.data.value[0]);
+                    } 
+                    function failElement(resp_element) {
+                        $scope.prestamo.error = "No se encontro elemento.";
+                    } 
+                }
+                function failItem(resp_item) {
+                    $scope.prestamo.error = "No se encontro Item.";
+                }           
+                    //$scope.elemento = JSON.parse(resp.data)
+            
+
+            function fail(resp_prestamo) {
+                $scope.prestamo.error = "No se encontro prestamo.";
             }
         
     }
