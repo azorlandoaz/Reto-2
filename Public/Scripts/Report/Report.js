@@ -5,42 +5,58 @@
 var reto = angular.module('reto', []);
 
 reto.controller('ElementoCtrl', function ($scope, $http) {
+    /***************************************************
+            espacio para inicializar valores
+    ****************************************************/
     $scope.elemento = {
         id:[]
     };
     $scope.prestamo = {
         elemento:[],
-        prestamo:["prestamo"]
+        prestamo:[]
     };
-
+    $scope.disableTagButton = {'visibility': 'hidden'};//oculto boton de guardado desde el comienzo
     $scope.sesion = {};
 
     $scope.select = {
-        id:["id"]
+        id:["id"],
+        name:["name"]
     };
     onLoadReport();
+    /**********************************************************************************************************/
 
-    $scope.check = function(value, checked) {
+    /***************************************************
+        funcion que se encarga de sacar las id de los
+        elementos seleccionados en la lista $scope.select
+        y de mostrar el boton de solicitar cuando alguno
+        este seleccionado.
+    ****************************************************/
+    $scope.check = function(value,name, checked) {
     var idx = arrayObjectIndexOf($scope.select,value);
        
         if (idx < 0 && checked) {
             $scope.select.id.push(value);
-            console.log("Check");
+            $scope.select.name.push(name);
         }else
         {
           $scope.select.id.splice(idx, 1);
+          $scope.select.name.splice(idx, 1);
         }
-        console.log($scope.select);
-    function arrayObjectIndexOf(arr, obj){
-    for(var i = 0; i < arr.length; i++){
-        if(angular.equals(arr[i], obj)){
-            return i;
+        if($scope.select.id.length == 1){
+            $scope.disableTagButton = {'visibility': 'hidden'};
+        }else{
+            $scope.disableTagButton = {'visibility': 'visible'};
         }
+        function arrayObjectIndexOf(arr, obj){
+            for(var i = 0; i < arr.length; i++){
+                if(angular.equals(arr[i], obj)){
+                    return i;
+                }
+            };
+        return -1;
+        };
     };
-    return -1;
-    };
-};
-    
+   /*************************************************************************************************************/ 
 
     function onLoadReport() {
         var userID = sessionStorage.userID;
@@ -66,8 +82,6 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
                      var getItem = $http.get(urlItem);
                      getItem.then(successItem, failItem);
                 } 
-                //$scope.elemento = $scope.prestamo.prestamo.concat($scope.prestamo.elemento);
-                console.log($scope.prestamo.elemento);
             }
                 function successItem(resp) {
                     for (var i = 0; i < resp.data.value.length; i++) {
@@ -139,6 +153,36 @@ $scope.clickSolicitarPrestamo = function()
         {
             alert("No se pudo cerrar sesion. " + resp.data);
         }
+    }
+
+
+    $scope.clickGuardar = function(){
+
+        for (var i = 1; i < $scope.select.id.length; i++) {
+                //eliminamos un item con el id de cada elemento
+                   var urlItem = 'http://localhost:8081/delete/Item/idElemento/'+$scope.select.id[i];
+                    var deleteItem = $http.get(urlItem);
+                    deleteItem.then(sucessItem, failItem);
+                //actualizacion en la base de datos del estado del elemento
+                    var urlElemento = 'http://localhost:8081/update/Elemento/'+ $scope.select.name[i]+'/'+'Disponible'+'/'+$scope.select.id[i];
+                    var updateElem = $http.get(urlElemento);
+                    updateElem.then(sucessElem, failElem);
+                }
+                function sucessItem(resp){
+                        console.log(resp);
+                        console.log("el item fue eliminado exitosamente");
+                    }
+                    function failItem(resp){
+                        alert("No se pudo elminar el item:: " + resp.data);
+                    }
+                    function sucessElem(resp){
+                        console.log("elemento actualizado");
+                    }
+                    function failElem(resp){
+                        alert("No se pudo actualizar el elemento:: " + resp.data);
+                    }
+
+        document.location = '/Views/Report.html';
     }
 
    

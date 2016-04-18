@@ -127,7 +127,7 @@ module.exports.update = function (request,response) {
 	}}
 
 module.exports.delete = function (request,response) {
-	var tabla = request.params.tabla;
+	var tabla = request.params.collection;
 	var param = request.params.param;
 	var value = request.params.value;
 	

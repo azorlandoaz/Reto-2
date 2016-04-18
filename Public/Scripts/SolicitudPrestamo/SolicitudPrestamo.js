@@ -62,7 +62,7 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
 
        
         if (username != null) {
-            var url = 'http://localhost:8081/ElementReadX/Elemento/estado/disponible';
+            var url = 'http://localhost:8081/ElementReadX/Elemento/estado/Disponible';
         }else
         {
             document.location = '/Views/Login.html';
@@ -124,9 +124,7 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
                 var crearPrestamo = $http.get(urlPrestamo);
                 crearPrestamo.then(sucessPrestamo, failPrestamo);
 
-             function sucessPrestamo(resp)
-            {
-
+             function sucessPrestamo(resp){
                var idPrestamo = resp.data.value[0]._id;
                 
                 for (var i = 1; i < $scope.select.id.length; i++) {
@@ -139,28 +137,24 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
                     var updateElem = $http.get(urlElemento);
                     updateElem.then(sucessElem, failElem);
                 }
+            
 
-                function sucessItem(resp)
-                    {
+                function sucessItem(resp){
                         console.log(resp);
                         console.log("el item con id: "+ resp.data.value[0]._id + " fue registrado exitosamente");
                     }
-                    function failItem(resp)
-                    {
-                        alert("No se pudo crear el item:: " + resp.data);
+                    function failItem(resp){
+                        console.log("No se pudo crear el item:: " + resp.data);
                     }
-                    function sucessElem(resp)
-                    {
+                    function sucessElem(resp){
                         console.log("elemento actualizado");
                         console.log(resp);
                     }
-                    function failElem(resp)
-                    {
-                        alert("No se pudo actualizar el elemento:: " + resp.data);
+                    function failElem(resp){
+                        console.log("No se pudo actualizar el elemento:: " + resp.data);
                     }
                 document.location = '/Views/SolicitudPrestamo.html';
             }
-
             function failPrestamo(resp)
             {
                 alert("No se pudo crear el prestamo:: " + resp.data);
