@@ -160,14 +160,15 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
       ****************************************/
                               
                 //actualizacion en la base de datos del estado del elemento
+                for (var i = 1; i < $scope.select.id.length; i++) {
                     var urlElemento = 'http://localhost:8081/updateUsuario/Usuario/'+ $scope.select.Usuario[i]+'/'+$scope.select.contraseña[i]+'/'
                     + $scope.select.estado[i]+ '/' + $scope.select.nick[i]+ '/' +  $scope.select.codigo[i]+ '/' +  $scope.select.perfil[i];
                     var updateElem = $http.get(urlElemento);
-                    updateElem.then(sucessElem, failElem);            
-
+                    updateElem.then(sucessItem, failItem);            
+                }
                 function sucessItem(resp){
                         console.log(resp);
-                        console.log("el item con id: "+ resp.data.value[0]._id + " fue registrado exitosamente");
+                        console.log("el usuario con id: "+ resp.data.value[0]._id + " fue actualizado exitosamente");
                     }
                     function failItem(resp){
                         console.log("No se pudo crear el item:: " + resp.data);
