@@ -32,6 +32,7 @@ app.get('/readUsuario/:param/:value',Usuario_Service.readUsuario);
 app.get('/readUsuario/:param',Usuario_Service.readUsuarioByName);
 
 app.get('/createUsuario/:v1/:v2/:v3/:v4/:v5',Usuario_Service.createUsuario);
+app.get('/updateUsuario/:collection/:v1/:v2/:v3/:v4/:v5/:id',General_Service.update);
 
 app.get('/create/:collection/:v1/:v2',Elemento_Service.create);
 app.get('/readElement/:collection',Elemento_Service.read);

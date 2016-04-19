@@ -52,19 +52,18 @@
             <div class="row header blue">
                 <div class="cell">Seleccionar</div>
                 <div class="cell">IdUsuario</div>
-                <div class="cell">Elemento</div>
+                <div class="cell">Usuario</div>
                 <div class="cell">Estado</div>
-                <div class="cell">Fecha de inicio</div>
-                <div class="cell">Fecha de fin</div>
-          
+                <div class="cell">Nick</div>
+
             </div>
             <div class="row" ng-repeat="elem in elemento">
-                <div class="cell"><input type="checkbox" ng-model="checked" ng-change="check(elem._id,elem.nombre,checked)"/> </div>
-                <div class="cell">{{ elem.idUsuario }}</div>
-                <div class="cell">{{ elem.nombre }}</div>
+                <div class="cell"><input type="checkbox" ng-model="checked" 
+                    ng-change="check(elem._id,elem.usuario,elem.contraseña,elem.estado,elem.nick,checked)"/> </div>
+                <div class="cell">{{ elem._id }}</div>
+                <div class="cell">{{ elem.Usuario }}</div>
                 <div class="cell">{{ elem.estado }}</div>
-                <div class="cell">{{ elem.fechaInicio }}</div>
-                <div class="cell">{{ elem.fechaFin }}</div>
+                <div class="cell">{{ elem.nick }}</div>
          
             </div>
 

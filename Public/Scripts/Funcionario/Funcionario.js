@@ -10,12 +10,17 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
     /***************************************************
             espacio para inicializar valores
     ****************************************************/
-    $scope.elemento = {};
+    $scope.elemento = [];
     $scope.sesion = {};
     $scope.disableTagButton = {'visibility': 'hidden'};//oculto boton de guardado desde el comienzo
     $scope.select = {
         id:["id"],
-        name:["name"]
+        usuario:["name"],
+        contraseña:["name"],
+        estado:["name"],
+        nick:["name"],
+        perfil:["perfil"],
+        codigo:["codigo"]    
     };//lista de id de los elementos seleccionados
     onLoadReport();
     /**********************************************************************************************************/
@@ -26,15 +31,25 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
         y de mostrar el boton de solicitar cuando alguno
         este seleccionado.
     ****************************************************/
-    $scope.check = function(value,name, checked) {
+    $scope.check = function(value,name,contraseña,estado,nick,checked) {
     var idx = arrayObjectIndexOf($scope.select,value);
        
         if (idx < 0 && checked) {
             $scope.select.id.push(value);
-            $scope.select.name.push(name);
+            $scope.select.usuario.push(name);
+            $scope.select.contraseña.push(name);
+            $scope.select.estado.push(name);
+            $scope.select.nick.push(name);
+            $scope.select.perfil.push(name);
+            $scope.select.codigo.push(name);
         }else{
           $scope.select.id.splice(idx, 1);
-          $scope.select.name.splice(idx, 1);
+          $scope.select.usuario.splice(idx, 1);
+          $scope.select.contraseña.splice(idx, 1);
+          $scope.select.estado.splice(idx, 1);
+          $scope.select.nick.splice(idx, 1);
+          $scope.select.perfil.splice(idx, 1);
+          $scope.select.codigo.splice(idx, 1);
         }
 
         if($scope.select.id.length == 1){
@@ -57,15 +72,14 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
 
     function onLoadReport() {
         var username = sessionStorage.username;
-        var elemento = {}
-        var item = {}
+        var elemento = {};
+        var item = {};
         angular.extend(elemento, $scope.elemento, $scope.item);
 
        
         if (username != null) {
-            var url = 'http://localhost:8081/prestamoRead/Prestamo';
-        }else
-        {
+            var url = 'http://localhost:8081/ElementReadX/Elemento/estado/Reservado';
+        }else{
             document.location = '/Views/Login.html';
         }
 
@@ -73,9 +87,39 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
             get.then(success, fail);
 
             function success(resp) {
-                $scope.elemento = resp.data.value;
-                var idPrestamo = resp.data.value[0]._id ;
-                var urlItem = 
+                //$scope.elemento = resp.data.value;
+                var elementos = resp.data.value;
+
+
+                for (var i = 0; i < elementos.length; i++) {
+                    var url = 'http://localhost:8081/itemReadX/Item/idElemento/'+elementos[i]._id;
+                    var getItem = $http.get(url);
+                    getItem.then(successITem, fail);
+                    console.log(elementos[i]._id);
+                }
+
+                function successITem(resp) {
+                   // console.log(resp.data.value); 
+                    var idPrestamo = resp.data.value[0].idPrestamo;
+                    var url = 'http://localhost:8081/PrestamoReadX/Prestamo/_id/'+idPrestamo;
+                    var getItem = $http.get(url);
+                    getItem.then(successPrestamo, fail);
+                
+                 }
+
+                function successPrestamo(resp) {
+                    var idUsuario = resp.data.value[0].idUsuario;
+                    var url = 'http://localhost:8081/PrestamoReadX/Usuario/_id/'+idUsuario;
+                    var getItem = $http.get(url);
+                    getItem.then(successUsuario, fail);
+                }
+
+                function successUsuario(resp) {
+                    console.log(resp.data.value[0]);
+                    $scope.elemento.push(resp.data.value[0]);
+                }
+
+
             }
 
             function fail(resp) {
@@ -109,36 +153,17 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
             AQUI ESTA LA MAGIA
 *********************************************************/
   $scope.clickGuardar = function(){
-        var elemento = {}
+        var elemento = {};
         angular.extend(elemento, $scope.elemento);
       /******************************************
       primero creamos el prestamo
       ****************************************/
-        var idUsuario = sessionStorage.userID; 
-              
-               var d = new Date(); var dia =d.getDate().toString(); var diaFinal =(d.getDate()+ 3).toString();
-                var mes =(d.getMonth()+1).toString(); var año =d.getFullYear().toString();
-                      var nowDate = dia + '-' + mes + '-'+ año ;
-                var endingDate = diaFinal + '-' + mes + '-'+ año ;
-                var urlPrestamo = 'http://localhost:8081/prestamoCreate/Prestamo/'+ idUsuario+'/'+nowDate+'/'+endingDate;
-                console.log(urlPrestamo);
-                var crearPrestamo = $http.get(urlPrestamo);
-                crearPrestamo.then(sucessPrestamo, failPrestamo);
-
-             function sucessPrestamo(resp){
-               var idPrestamo = resp.data.value[0]._id;
-                
-                for (var i = 1; i < $scope.select.id.length; i++) {
-                //creacion de un item nuevo con el id de cada elemento pero compartiendo el mismo id de prestamo
-                   var urlItem = 'http://localhost:8081/CreateItem/Item/'+ idPrestamo+'/'+$scope.select.id[i];
-                    var crearItem = $http.get(urlItem);
-                    crearItem.then(sucessItem, failItem);
+                              
                 //actualizacion en la base de datos del estado del elemento
-                    var urlElemento = 'http://localhost:8081/update/Elemento/'+ $scope.select.name[i]+'/'+'Reservado'+'/'+$scope.select.id[i];
+                    var urlElemento = 'http://localhost:8081/updateUsuario/Usuario/'+ $scope.select.Usuario[i]+'/'+$scope.select.contraseña[i]+'/'
+                    + $scope.select.estado[i]+ '/' + $scope.select.nick[i]+ '/' +  $scope.select.codigo[i]+ '/' +  $scope.select.perfil[i];
                     var updateElem = $http.get(urlElemento);
-                    updateElem.then(sucessElem, failElem);
-                }
-            
+                    updateElem.then(sucessElem, failElem);            
 
                 function sucessItem(resp){
                         console.log(resp);
@@ -147,20 +172,7 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
                     function failItem(resp){
                         console.log("No se pudo crear el item:: " + resp.data);
                     }
-                    function sucessElem(resp){
-                        console.log("elemento actualizado");
-                        console.log(resp);
-                    }
-                    function failElem(resp){
-                        console.log("No se pudo actualizar el elemento:: " + resp.data);
-                    }
-                document.location = '/Views/SolicitudPrestamo.html';
-            }
-            function failPrestamo(resp)
-            {
-                alert("No se pudo crear el prestamo:: " + resp.data);
-            }
-
+                document.location = '/Views/Funcionario.html';
     }
     /***************************************************************************************************************/
     $scope.clickSalir = function () {
