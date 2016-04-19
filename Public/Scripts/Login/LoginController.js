@@ -66,15 +66,11 @@ parking.controller('loginCtrl', function ($scope, $http) {
         console.log(sessionStorage.perfil);
         if(sessionStorage.perfil == "Almacenista"){
             document.location = '/Views/Almacenista.html';
-        }
-
-        if(sessionStorage.perfil == "estudiante"){
+        }else if(sessionStorage.perfil == "estudiante"){
        document.location = '/Views/Funcionario.html';
-       // document.location = '/Views/Report.html';
-        }
-
-       if(sessionStorage.perfil == "Funcionario"){
-//        document.location = '/Views/Funcionario.html';
+        document.location = '/Views/Report.html';
+        }else(sessionStorage.perfil == "Funcionario"){
+        document.location = '/Views/Funcionario.html';
         }
 
     }
