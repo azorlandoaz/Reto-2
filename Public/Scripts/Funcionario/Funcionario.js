@@ -58,11 +58,12 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
     function onLoadReport() {
         var username = sessionStorage.username;
         var elemento = {}
-        angular.extend(elemento, $scope.elemento);
+        var item = {}
+        angular.extend(elemento, $scope.elemento, $scope.item);
 
        
         if (username != null) {
-            var url = 'http://localhost:8081/ElementReadX/Elemento/estado/Disponible';
+            var url = 'http://localhost:8081/prestamoRead/Prestamo';
         }else
         {
             document.location = '/Views/Login.html';
@@ -73,8 +74,8 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
 
             function success(resp) {
                 $scope.elemento = resp.data.value;
-                //$scope.elemento = JSON.parse(resp.data)
-                //console.log( resp.data.value);
+                var idPrestamo = resp.data.value[0]._id ;
+                var urlItem = 
             }
 
             function fail(resp) {

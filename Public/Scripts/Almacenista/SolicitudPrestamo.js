@@ -62,7 +62,7 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
 
        
         if (username != null) {
-            var url = 'http://localhost:8081/ElementReadX/Elemento/estado/Disponible';
+            var url = 'http://localhost:8081/ElementReadX/Elemento/estado/Reservado';
         }else
         {
             document.location = '/Views/Login.html';
@@ -83,7 +83,8 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
         
     }
 
-    function operationSearchD(elemento) {
+
+      function operationSearchD(elemento) {
 
         var url = '/read/Registro/';
         var get = $http.get(url);
@@ -110,56 +111,24 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
   $scope.clickGuardar = function(){
         var elemento = {}
         angular.extend(elemento, $scope.elemento);
-      /******************************************
-      primero creamos el prestamo
-      ****************************************/
-        var idUsuario = sessionStorage.userID; 
-              
-               var d = new Date(); var dia =d.getDate().toString(); var diaFinal =(d.getDate()+ 3).toString();
-                var mes =(d.getMonth()+1).toString(); var año =d.getFullYear().toString();
-                      var nowDate = dia + '-' + mes + '-'+ año ;
-                var endingDate = diaFinal + '-' + mes + '-'+ año ;
-                var urlPrestamo = 'http://localhost:8081/prestamoCreate/Prestamo/'+ idUsuario+'/'+nowDate+'/'+endingDate;
-                
-                var crearPrestamo = $http.get(urlPrestamo);
-                crearPrestamo.then(sucessPrestamo, failPrestamo);
+     
+        //actualizacion en la base de datos del estado del elemento
+        for (var i = 1; i < $scope.select.id.length; i++) {
+               console.log("elemento actualizado" + $scope.select.name[i]);
+            var urlElemento = 'http://localhost:8081/update/Elemento/'+ $scope.select.name[i]+'/'+'Prestado'+'/'+$scope.select.id[i];
+            var updateElem = $http.get(urlElemento);
+            updateElem.then(sucessElem, failElem);
 
-             function sucessPrestamo(resp){
-               var idPrestamo = resp.data.value[0]._id;
-                
-                for (var i = 1; i < $scope.select.id.length; i++) {
-                //creacion de un item nuevo con el id de cada elemento pero compartiendo el mismo id de prestamo
-                   var urlItem = 'http://localhost:8081/CreateItem/Item/'+ idPrestamo+'/'+$scope.select.id[i];
-                    var crearItem = $http.get(urlItem);
-                    crearItem.then(sucessItem, failItem);
-                //actualizacion en la base de datos del estado del elemento
-                    var urlElemento = 'http://localhost:8081/update/Elemento/'+ $scope.select.name[i]+'/'+'Reservado'+'/'+$scope.select.id[i];
-                    var updateElem = $http.get(urlElemento);
-                    updateElem.then(sucessElem, failElem);
-                }
-            
-
-                function sucessItem(resp){
-                        console.log(resp);
-                        console.log("el item con id: "+ resp.data.value[0]._id + " fue registrado exitosamente");
-                    }
-                    function failItem(resp){
-                        console.log("No se pudo crear el item:: " + resp.data);
-                    }
-                    function sucessElem(resp){
-                        console.log("elemento actualizado");
-                        console.log(resp);
-                    }
-                    function failElem(resp){
-                        console.log("No se pudo actualizar el elemento:: " + resp.data);
-                    }
-                document.location = '/Views/SolicitudPrestamo.html';
             }
-            function failPrestamo(resp)
-            {
-                alert("No se pudo crear el prestamo:: " + resp.data);
-            }
-
+        function sucessElem(resp){
+            console.log("elemento actualizado");
+            onLoadReport();
+            console.log(resp);
+        }
+        function failElem(resp){
+            console.log("No se pudo actualizar el elemento:: " + resp.data);
+        }
+      
     }
     /***************************************************************************************************************/
     $scope.clickSalir = function () {

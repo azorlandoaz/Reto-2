@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html ng-app="reto" >
 <head>
     <meta charset="UTF-8">
@@ -51,14 +51,20 @@
         <div class="table">
             <div class="row header blue">
                 <div class="cell">Seleccionar</div>
+                <div class="cell">IdUsuario</div>
                 <div class="cell">Elemento</div>
                 <div class="cell">Estado</div>
+                <div class="cell">Fecha de inicio</div>
+                <div class="cell">Fecha de fin</div>
           
             </div>
             <div class="row" ng-repeat="elem in elemento">
                 <div class="cell"><input type="checkbox" ng-model="checked" ng-change="check(elem._id,elem.nombre,checked)"/> </div>
+                <div class="cell">{{ elem.idUsuario }}</div>
                 <div class="cell">{{ elem.nombre }}</div>
                 <div class="cell">{{ elem.estado }}</div>
+                <div class="cell">{{ elem.fechaInicio }}</div>
+                <div class="cell">{{ elem.fechaFin }}</div>
          
             </div>
 
@@ -112,7 +118,7 @@
         
     </div>
 
-    <script src="../Scripts/Almacenista/SolicitudPrestamo.js"></script>
+    <script src="../Scripts/Funcionario/Funcionario.js"></script>
     <script src='../Scripts/Report/jquery.min.js'></script>
     <script src='../Scripts/Report/moment.min.js'></script>
     <script src='../Scripts/Report/pikaday.min.js'></script>

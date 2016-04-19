@@ -31,6 +31,7 @@ parking.controller('loginCtrl', function ($scope, $http) {
         angular.extend(login, $scope.login);
         if (login.username != null && login.UserPassword != null) 
         {
+            console.log()
             var url = 'http://localhost:8081/readUsuario/'+login.username+'/'+login.UserPassword;
             var getUser = $http.get(url);
             getUser.then(success, fail);
@@ -40,6 +41,7 @@ parking.controller('loginCtrl', function ($scope, $http) {
         function success(resp) {  
             var d = new Date(); 
             var userExist = resp.data.value.length;
+            console.log(sessionStorage);
             var datenow = d.getMonth()+'-'+d.getDay()+'-'+d.getFullYear()+'-'+ d.getHours()+':' + d.getMinutes(); 
             sessionStorage.userID = resp.data.value[0]._id;
             sessionStorage.username = login.username;
@@ -61,11 +63,20 @@ parking.controller('loginCtrl', function ($scope, $http) {
 
     function sucessRegister(resp)
     {
-        if(sessionStorage.perfil == "almacenista"){
+        console.log(sessionStorage.perfil);
+        if(sessionStorage.perfil == "Almacenista"){
             document.location = '/Views/Almacenista.html';
-        }else{
-        document.location = '/Views/Report.html';
         }
+
+        if(sessionStorage.perfil == "estudiante"){
+       document.location = '/Views/Funcionario.html';
+       // document.location = '/Views/Report.html';
+        }
+
+       if(sessionStorage.perfil == "Funcionario"){
+//        document.location = '/Views/Funcionario.html';
+        }
+
     }
 
     function failRegister(resp)

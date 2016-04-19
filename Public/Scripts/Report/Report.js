@@ -77,6 +77,7 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
 
             function success(resp_prestamo) {
                 $scope.prestamo.prestamo = resp_prestamo.data.value;
+               
                 for (var i = 0; i < resp_prestamo.data.value.length; i++) {
                      var urlItem = 'http://localhost:8081/itemReadX/Item/idPrestamo/'+resp_prestamo.data.value[i]._id;
                      var getItem = $http.get(urlItem);
@@ -89,6 +90,7 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
                      var getElement = $http.get(urlElement);
                      getElement.then(successElement, failElement);
                     }
+
 
                      function successElement(resp_element) {
                         $scope.prestamo.elemento.push(resp_element.data.value[0]);
@@ -158,29 +160,36 @@ $scope.clickSolicitarPrestamo = function()
 
     $scope.clickGuardar = function(){
 
-        for (var i = 1; i < $scope.select.id.length; i++) {
-                //eliminamos un item con el id de cada elemento
-                   var urlItem = 'http://localhost:8081/delete/Item/idElemento/'+$scope.select.id[i];
-                    var deleteItem = $http.get(urlItem);
-                    deleteItem.then(sucessItem, failItem);
-                //actualizacion en la base de datos del estado del elemento
-                    var urlElemento = 'http://localhost:8081/update/Elemento/'+ $scope.select.name[i]+'/'+'Disponible'+'/'+$scope.select.id[i];
-                    var updateElem = $http.get(urlElemento);
-                    updateElem.then(sucessElem, failElem);
-                }
-                function sucessItem(resp){
-                        console.log(resp);
-                        console.log("el item fue eliminado exitosamente");
-                    }
-                    function failItem(resp){
-                        alert("No se pudo elminar el item:: " + resp.data);
-                    }
-                    function sucessElem(resp){
-                        console.log("elemento actualizado");
-                    }
-                    function failElem(resp){
-                        alert("No se pudo actualizar el elemento:: " + resp.data);
-                    }
+        for (var i = 1; i < $scope.select.id.length; i++) 
+        {
+        //eliminamos un item con el id de cada elemento
+            var urlItem = 'http://localhost:8081/delete/Item/idElemento/'+$scope.select.id[i];
+            var deleteItem = $http.get(urlItem);
+            deleteItem.then(sucessItem, failItem);
+        //Actualizacion en la base de datos del estado del elemento
+            var urlElemento = 'http://localhost:8081/update/Elemento/'+ $scope.select.name[i]+'/'+'Disponible'+'/'+$scope.select.id[i];
+            var updateElem = $http.get(urlElemento);
+            updateElem.then(sucessElem, failElem);
+      
+        }
+        function sucessItem(resp)
+        {
+            console.log(resp);
+            console.log("el item fue eliminado exitosamente");
+                        }
+        function failItem(resp){
+            alert("No se pudo elminar el item:: " + resp.data);
+        }
+
+
+        function sucessElem(resp){
+        console.log("elemento actualizado");
+         }
+
+        function failElem(resp){
+            alert("No se pudo actualizar el elemento:: " + resp.data);
+        }
+       
 
         document.location = '/Views/Report.html';
     }
