@@ -31,17 +31,19 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
         y de mostrar el boton de solicitar cuando alguno
         este seleccionado.
     ****************************************************/
-    $scope.check = function(value,name,contraseña,estado,nick,checked) {
+    $scope.check = function(value,name,contraseña,estado,nick,perfil,checked, codigo) {
+    console.log($scope.check);
     var idx = arrayObjectIndexOf($scope.select,value);
+
        
         if (idx < 0 && checked) {
             $scope.select.id.push(value);
             $scope.select.usuario.push(name);
-            $scope.select.contraseña.push(name);
-            $scope.select.estado.push(name);
-            $scope.select.nick.push(name);
-            $scope.select.perfil.push(name);
-            $scope.select.codigo.push(name);
+            $scope.select.contraseña.push(contraseña);
+            $scope.select.estado.push(estado);
+            $scope.select.nick.push(nick);
+            $scope.select.perfil.push(perfil);
+            $scope.select.codigo.push(codigo);
         }else{
           $scope.select.id.splice(idx, 1);
           $scope.select.usuario.splice(idx, 1);
@@ -90,12 +92,12 @@ reto.controller('ElementoCtrl', function ($scope, $http) {
                 //$scope.elemento = resp.data.value;
                 var elementos = resp.data.value;
 
-
+                    console.log(elementos);
                 for (var i = 0; i < elementos.length; i++) {
                     var url = 'http://localhost:8081/itemReadX/Item/idElemento/'+elementos[i]._id;
                     var getItem = $http.get(url);
                     getItem.then(successITem, fail);
-                    console.log(elementos[i]._id);
+                    console.log(elementos);
                 }
 
                 function successITem(resp) {

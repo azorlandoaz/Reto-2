@@ -46,9 +46,11 @@ parking.controller('loginCtrl', function ($scope, $http) {
             sessionStorage.userID = resp.data.value[0]._id;
             sessionStorage.username = login.username;
             sessionStorage.perfil = resp.data.value[0].perfil;
+            sessionStorage.estado = resp.data.value[0].estado;
             if(userExist == 0){
                 var registerUrl = 'http://localhost:8081/createRegistro/Registro/'+ login.username+'/LogError' + '/'+ datenow;
-            }else{                
+
+           }else{                
                 var registerUrl = 'http://localhost:8081/createRegistro/Registro/'+ login.username+'/LogIn' + '/'+ datenow;
             }
             var getRegister = $http.get(registerUrl);
@@ -69,9 +71,9 @@ parking.controller('loginCtrl', function ($scope, $http) {
         }else if(sessionStorage.perfil == "estudiante"){
        document.location = '/Views/Funcionario.html';
         document.location = '/Views/Report.html';
-        }else(sessionStorage.perfil == "Funcionario"){
+        }else if(sessionStorage.perfil == "Funcionario"){
         document.location = '/Views/Funcionario.html';
-        }
+        }   
 
     }
 
